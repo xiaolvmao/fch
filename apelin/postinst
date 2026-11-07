@@ -1,0 +1,9 @@
+#!/bin/sh
+# 1.0.0 早期版本装过一个后台写入进程（label 见下），现在由 App 自己写库：
+# 这里把它从 launchd 上摘掉，旧版本升级上来就不会有残留进程。没有它时什么也不做。
+set -e
+label="@PKGID@.writer"
+launchctl bootout system/"$label" 2>/dev/null || true
+launchctl bootout user/501/"$label" 2>/dev/null || true
+launchctl bootout gui/501/"$label" 2>/dev/null || true
+exit 0
